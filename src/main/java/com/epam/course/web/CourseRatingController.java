@@ -4,6 +4,7 @@ import com.epam.course.service.CourseRatingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,6 +35,7 @@ public class CourseRatingController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_REP')")
     @ResponseStatus(HttpStatus.CREATED)
     public void createCourseRating(@PathVariable("courseId") Long courseId,
                                    @RequestBody @Validated RatingDto ratingDto) {
@@ -42,6 +44,7 @@ public class CourseRatingController {
     }
 
     @PostMapping("/{score}")
+    @PreAuthorize("hasRole('ROLE_REP')")
     @ResponseStatus(HttpStatus.CREATED)
     public void createMultipleCourseRating(@PathVariable("courseId") Long courseId,
                                            @PathVariable("score") Integer score,
@@ -66,6 +69,7 @@ public class CourseRatingController {
     }
 
     @PutMapping
+    @PreAuthorize("hasRole('ROLE_REP')")
     @ResponseStatus(HttpStatus.OK)
     public RatingDto updateAllCourseRating(@PathVariable("courseId") long courseId,
                                                  @RequestBody @Validated RatingDto ratingDto) {
@@ -74,6 +78,7 @@ public class CourseRatingController {
     }
 
     @PatchMapping
+    @PreAuthorize("hasRole('ROLE_REP')")
     @ResponseStatus(HttpStatus.OK)
     public RatingDto updatePartialCourseRating(@PathVariable("courseId") long courseId,
                                                      @RequestBody @Validated RatingDto ratingDto) {
@@ -82,6 +87,7 @@ public class CourseRatingController {
     }
 
     @DeleteMapping(path = "/{customerId}")
+    @PreAuthorize("hasRole('ROLE_REP')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCourseRating(@PathVariable("courseId") long courseId,
                                    @PathVariable("customerId") long customerId) {
